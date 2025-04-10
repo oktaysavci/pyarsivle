@@ -31,14 +31,19 @@ def get_session_token(email, password):
     if result["response"]["result"] == "Success":
         return result["response"]["session_token"]
     else:
-        raise Exception("❌ Oturum alınamadı:", result)
+        print(f"❌ Hata: {result['response']['error_message']}")
+        raise Exception("❌ Oturum alınamadı.")
 
 # 2. Upload URL al
 def get_upload_url(session_token):
     url = f"https://www.mediafire.com/api/1.5/upload/get_upload_url.php?session_token={session_token}&response_format=json"
     r = requests.get(url)
     result = r.json()
-    return result["response"]["upload"]["upload_url"]
+    if result["response"]["result"] == "Success":
+        return result["response"]["upload"]["upload_url"]
+    else:
+        print(f"❌ Hata: {result['response']['error_message']}")
+        raise Exception("❌ Upload URL alınamadı.")
 
 # 3. Dosya yükle
 def upload_file(upload_url, file_path):
@@ -49,7 +54,8 @@ def upload_file(upload_url, file_path):
         if r.status_code == 200:
             return r.text
         else:
-            raise Exception(f"❌ Yükleme başarısız: {r.status_code}", r.text)
+            print(f"❌ Hata: {r.status_code} - {r.text}")
+            raise Exception(f"❌ Yükleme başarısız: {r.status_code}")
 
 # 4. Ana kontrol
 try:
