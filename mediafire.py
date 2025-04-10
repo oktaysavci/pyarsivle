@@ -3,12 +3,12 @@ import requests
 import json
 import os
 
-# Kullanıcı bilgilerini al
+# deneme 
 email = input("📧 MediaFire e-posta adresinizi girin: ")
 password = input("🔑 Şifrenizi girin: ")
 file_path = input("📄 Yüklemek istediğiniz dosyanın yolunu girin: ")
 
-app_id = "42511"  # MediaFire test uygulaması ID'si
+app_id = "42511"  
 
 # SHA1 hesaplama fonksiyonu
 def sha1(data):
@@ -39,6 +39,10 @@ def get_upload_url(session_token):
     url = f"https://www.mediafire.com/api/1.5/upload/get_upload_url.php?session_token={session_token}&response_format=json"
     r = requests.get(url)
     result = r.json()
+
+    print("📄 Upload URL Yanıtı:")
+    print(json.dumps(result, indent=4))  # Yanıtı daha iyi görebilmek için formatlı yazdırıyoruz
+
     if result["response"]["result"] == "Success":
         return result["response"]["upload"]["upload_url"]
     else:
@@ -85,3 +89,4 @@ try:
 
 except Exception as e:
     print("❌ Hata:", e)
+            
