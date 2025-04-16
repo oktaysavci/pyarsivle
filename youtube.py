@@ -1,4 +1,5 @@
 from pytube import YouTube
+import traceback
 
 def video_indir(link):
     try:
@@ -9,9 +10,9 @@ def video_indir(link):
         stream.download()
         print("İndirme tamamlandı.")
     except Exception as e:
-        print(f"Hata oluştu: {e}")
+        print("Bir hata oluştu:")
+        traceback.print_exc()
 
 if __name__ == "__main__":
-    link = input("İndirmek istediğiniz YouTube video linkini girin: ")
+    link = input("YouTube video linkini girin: ").strip()
     video_indir(link)
-  
