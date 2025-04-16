@@ -1,17 +1,14 @@
-from pytube import YouTube
-import traceback
+import yt_dlp
 
 def video_indir(link):
-    try:
-        yt = YouTube(link)
-        print(f"Video başlığı: {yt.title}")
-        stream = yt.streams.get_highest_resolution()
-        print("İndiriliyor...")
-        stream.download()
-        print("İndirme tamamlandı.")
-    except Exception as e:
-        print("Bir hata oluştu:")
-        traceback.print_exc()
+    ydl_opts = {
+        'format': 'bv*+ba/best',  
+        'merge_output_format': 'mp4',  
+        'outtmpl': '%(title)s.%(ext)s',  
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([link])
 
 if __name__ == "__main__":
     link = input("YouTube video linkini girin: ").strip()
