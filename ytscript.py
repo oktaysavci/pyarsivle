@@ -4,9 +4,10 @@ import re
 from datetime import datetime
 
 def temizle_baslik(baslik):
+    #22
     baslik = re.sub(r'#\w+', '', baslik)           
     baslik = baslik.replace(" ", "")               
-    baslik = re.sub(r'[^\w\-]', '', baslik)       
+    baslik = re.sub(r'[^\w\-]', '', baslik)        
     return baslik
 
 def indir_link(link):
@@ -18,7 +19,7 @@ def indir_link(link):
             dosya_adi = f"{tarih}_{baslik}.mp4"
 
         ydl_opts = {
-            'format': 'bestvideo+bestaudio/best',
+            'format': 'bv[height=1080][vcodec^=avc1]+ba[ext=m4a]/best',
             'merge_output_format': 'mp4',
             'outtmpl': dosya_adi,
             'quiet': False
@@ -63,4 +64,4 @@ def menu():
 
 if __name__ == "__main__":
     menu()
-                                
+            
