@@ -1,10 +1,19 @@
 import subprocess
+import requests
+
+def is_m3u8_url_valid(url):
+    try:
+        r = requests.head(url, timeout=10, allow_redirects=True)
+        content_type = r.headers.get("Content-Type", "")
+        return "application/vnd.apple.mpegurl" in content_type or "application/x-mpegURL" in content_type
+    except:
+        return False
 
 def download_video_from_m3u8():
     m3u8_url = input("M3U8 video linkini yapıştır: ").strip()
-    
-    if not m3u8_url.endswith(".m3u8"):
-        print("Bu link geçerli bir .m3u8 bağlantısı değil. Siktir et, düzgün link ver.")
+
+    if not is_m3u8_url_valid(m3u8_url):
+        print("❌ Bu geçerli bir .m3u8 linki değil gibi görünüyor.")
         return
 
     output_file = "output.mp4"
